@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Length Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        h1 {
+            color: #155724; /* Green color */
+            text-align: center;
+        }
+        form {
+            background-color: #d4edda; /* Light green background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="text"] {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        input[type="text"]::placeholder {
+            color: #aaa; /* Placeholder color */
+        }
+        #output {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9f5e9;
+            border: 1px solid #b2d8b2;
+            border-radius: 4px;
+            color: #2a7f2a;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .footer {
+            position: absolute;
+            bottom: 1cm;
+            right: 20px;
+            background-color: #d4edda; /* Light green background */
+            color: #155724; /* Darker green text */
+            font-size: 14px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #c3e6cb; /* Slightly darker green border */
+        }
+    </style>
+</head>
+<body>
+    <form id="converterForm">
+        <h1>Length Converter</h1>
+        <label for="fromUnit">From:</label>
+        <select id="fromUnit">
+            <option value="meters">Meters</option>
+            <option value="feet">Feet</option>
+            <option value="kilometers">Kilometers</option>
+            <option value="miles">Miles</option>
+            <option value="lightyears">Lightyears</option>
+            <option value="parsecs">Parsecs</option>
+            <!-- Add more units as needed -->
+        </select>
+        <input type="text" id="inputValue" name="inputValue" placeholder="Insert Value">
+        <label for="toUnit">To:</label>
+        <select id="toUnit">
+            <option value="meters">Meters</option>
+            <option value="feet">Feet</option>
+            <option value="kilometers">Kilometers</option>
+            <option value="miles">Miles</option>
+            <option value="lightyears">Lightyears</option>
+            <option value="parsecs">Parsecs</option>
+            <!-- Add more units as needed -->
+        </select>
+        <label for="output">Converted Value:</label>
+        <span id="output"></span>
+    </form>
+
+    <div class="footer">
+        Powered by Arpon Biswas
+    </div>
+
+    <script>
+        const conversionFactors = {
+            meters: {
+                meters: 1,
+                feet: 3.28084,
+                kilometers: 0.001,
+                miles: 0.000621371,
+                lightyears: 1.057e-16,
+                parsecs: 3.24078e-17
+            },
+            feet: {
+                meters: 0.3048,
+                feet: 1,
+                kilometers: 0.0003048,
+                miles: 0.000189394,
+                lightyears: 3.22174e-17,
+                parsecs: 9.87794e-18
+            },
+            kilometers: {
+                meters: 1000,
+                feet: 3280.84,
+                kilometers: 1,
+                miles: 0.621371,
+                lightyears: 1.057e-13,
+                parsecs: 3.24078e-14
+            },
+            miles: {
+                meters: 1609.34,
+                feet: 5280,
+                kilometers: 1.60934,
+                miles: 1,
+                lightyears: 1.70108e-13,
+                parsecs: 5.21553e-14
+            },
+            lightyears: {
+                meters: 9.461e+15,
+                feet: 3.104e+16,
+                kilometers: 9.461e+12,
+                miles: 5.879e+12,
+                lightyears: 1,
+                parsecs: 0.306601
+            },
+            parsecs: {
+                meters: 3.086e+16,
+                feet: 1.012e+17,
+                kilometers: 3.086e+13,
+                miles: 1.917e+13,
+                lightyears: 3.26156,
+                parsecs: 1
+            }
+        };
+
+        document.getElementById('converterForm').addEventListener('input', function() {
+            const inputValue = parseFloat(document.getElementById('inputValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            if (!isNaN(inputValue)) {
+                const convertedValue = inputValue * conversionFactors[fromUnit][toUnit];
+                document.getElementById('output').innerText = convertedValue.toFixed(8) + ' ' + toUnit;
+            } else {
+                document.getElementById('output').innerText = '';
+            }
+        });
+    </script>
+</body>
+</html>
